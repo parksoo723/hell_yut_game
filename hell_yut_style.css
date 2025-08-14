@@ -1,1 +1,731 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #ffb347, #ffa726, #ff9800);
+    min-height: 100vh;
+    color: white;
+    overflow-x: auto;
+}
+
+/* 모달 스타일 */
+.modal {
+    display: block;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.8);
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    margin: 2% auto;
+    padding: 0;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-header {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+    padding: 20px;
+    border-radius: 15px 15px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 1.8em;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.close {
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.close:hover {
+    color: #ffff00;
+    transform: scale(1.2);
+}
+
+.modal-body {
+    padding: 30px;
+    color: white;
+}
+
+.modal-body h3 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 1.5em;
+    color: #ff6b6b;
+}
+
+.rules-section {
+    margin-bottom: 25px;
+    background: rgba(0,0,0,0.2);
+    padding: 20px;
+    border-radius: 10px;
+    border-left: 4px solid #ff6b6b;
+}
+
+.rules-section h4 {
+    margin-bottom: 15px;
+    font-size: 1.2em;
+    color: #ffff00;
+}
+
+.hell-rules {
+    border-left-color: #ff0000;
+    background: rgba(255,0,0,0.1);
+}
+
+.hell-rules h4 {
+    color: #ff6666;
+}
+
+.rules-section ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.rules-section li {
+    margin: 10px 0;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.rules-section li:last-child {
+    border-bottom: none;
+}
+
+.rules-section li:before {
+    content: "🎯 ";
+    margin-right: 8px;
+}
+
+.hell-rules li:before {
+    content: "🔥 ";
+}
+
+.game-tips {
+    background: rgba(255,215,0,0.1);
+    padding: 20px;
+    border-radius: 10px;
+    border-left: 4px solid #ffd700;
+    text-align: center;
+}
+
+.game-tips h4 {
+    color: #ffd700;
+    margin-bottom: 15px;
+}
+
+.game-tips p {
+    line-height: 1.6;
+    font-size: 1.1em;
+}
+
+.modal-footer {
+    padding: 20px 30px;
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.2);
+}
+
+.start-btn, .rules-btn {
+    background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.1em;
+    font-weight: bold;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 0 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.rules-btn {
+    background: linear-gradient(45deg, #3498db, #2980b9);
+}
+
+.start-btn:hover, .rules-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+}
+
+.start-btn:active, .rules-btn:active {
+    transform: translateY(0);
+}
+
+/* 게임 모드 선택 스타일 */
+.game-mode-selection {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.game-mode-selection h4 {
+    color: #ffd700;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+
+.mode-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.mode-btn {
+    background: linear-gradient(45deg, #3498db, #2980b9);
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    font-size: 1.1em;
+    font-weight: bold;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    min-width: 140px;
+}
+
+.mode-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    background: linear-gradient(45deg, #2980b9, #3498db);
+}
+
+.mode-btn:active {
+    transform: translateY(0);
+}
+
+.mode-btn.selected {
+    background: linear-gradient(45deg, #27ae60, #2ecc71);
+    box-shadow: 0 0 20px rgba(46, 204, 113, 0.5);
+}
+
+/* AI 플레이어 표시 */
+.player-section.ai-player {
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.2), rgba(41, 128, 185, 0.2));
+    border: 2px solid rgba(52, 152, 219, 0.5);
+}
+
+.player-section.ai-thinking {
+    animation: aiThinking 1.5s ease-in-out infinite;
+}
+
+@keyframes aiThinking {
+    0%, 100% { 
+        box-shadow: 0 0 10px rgba(52, 152, 219, 0.3);
+    }
+    50% { 
+        box-shadow: 0 0 25px rgba(52, 152, 219, 0.7);
+    }
+}
+
+/* 게임 시작 애니메이션 */
+@keyframes gameStart {
+    0% {
+        opacity: 0.7;
+        transform: scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.game-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+    animation: hellFire 2s ease-in-out infinite alternate;
+}
+
+@keyframes hellFire {
+    0% { text-shadow: 3px 3px 6px rgba(255,0,0,0.8); }
+    100% { text-shadow: 3px 3px 15px rgba(255,100,0,0.9); }
+}
+
+.game-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0,0,0,0.3);
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.current-player, .yut-result {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.game-board {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
+}
+
+.board-container {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 12px;
+    aspect-ratio: 1;
+    background: linear-gradient(135deg, #CD853F, #D2691E);
+    padding: 25px;
+    border-radius: 20px;
+    border: 4px solid #8B4513;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+.position {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #FFF8DC, #FFFACD);
+    color: #333;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 1em;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-height: 80px;
+    position: relative;
+    border: 3px solid #DDD;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.position:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    background: linear-gradient(135deg, #FFFACD, #F5DEB3);
+}
+
+.hell-zone {
+    background: linear-gradient(45deg, #ff0000, #cc0000) !important;
+    color: white !important;
+    animation: hellPulse 1.5s ease-in-out infinite;
+    box-shadow: 0 0 20px rgba(255,0,0,0.7);
+}
+
+@keyframes hellPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.goal {
+    background: linear-gradient(45deg, #00ff00, #00cc00) !important;
+    color: white !important;
+    animation: goalShine 2s ease-in-out infinite;
+}
+
+@keyframes goalShine {
+    0%, 100% { box-shadow: 0 0 10px rgba(0,255,0,0.5); }
+    50% { box-shadow: 0 0 25px rgba(0,255,0,0.9); }
+}
+
+.players-area {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.player-section {
+    background: rgba(0,0,0,0.3);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.player-section h3 {
+    margin-bottom: 15px;
+    font-size: 1.3em;
+}
+
+.pieces {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.piece {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid white;
+    background: rgba(255,255,255,0.2);
+}
+
+.piece:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 15px rgba(255,255,255,0.8);
+}
+
+.piece.selected {
+    transform: scale(1.3);
+    box-shadow: 0 0 20px rgba(255,255,0,0.9);
+    border-color: yellow;
+}
+
+.piece.in-hell {
+    animation: hellTrap 1s ease-in-out infinite;
+}
+
+@keyframes hellTrap {
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(0.5) hue-rotate(180deg); }
+}
+
+.controls {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.throw-btn, .skip-btn {
+    background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    font-weight: bold;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 0 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.throw-btn:hover, .skip-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+}
+
+.throw-btn:active, .skip-btn:active {
+    transform: translateY(0);
+}
+
+.hell-info {
+    background: rgba(0,0,0,0.4);
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.hell-info h3 {
+    margin-bottom: 15px;
+    text-align: center;
+    font-size: 1.3em;
+}
+
+.hell-info ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.hell-info li {
+    margin: 8px 0;
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.hell-info li:before {
+    content: "🔥 ";
+    margin-right: 5px;
+}
+
+.message-area {
+    background: rgba(0,0,0,0.5);
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+#gameMessage {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+/* 윷 시각화 스타일 */
+.yut-display {
+    background: rgba(0,0,0,0.3);
+    padding: 20px;
+    border-radius: 15px;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.yut-display h3 {
+    margin-bottom: 15px;
+    font-size: 1.3em;
+    color: #ffd700;
+}
+
+.yut-sticks {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.yut-stick {
+    width: 60px;
+    height: 15px;
+    background: linear-gradient(45deg, #8B4513, #A0522D);
+    border-radius: 8px;
+    position: relative;
+    transition: all 0.5s ease;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+    border: 2px solid #654321;
+}
+
+.yut-stick::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    background: #2c1810;
+    border-radius: 50%;
+    transition: all 0.5s ease;
+}
+
+/* 윷 막대기 상태 */
+.yut-stick.flat {
+    background: linear-gradient(45deg, #D2691E, #CD853F);
+    border-color: #B8860B;
+}
+
+.yut-stick.flat::before {
+    background: #8B4513;
+}
+
+.yut-stick.round {
+    background: linear-gradient(45deg, #8B4513, #A0522D);
+    border-color: #654321;
+}
+
+.yut-stick.round::before {
+    background: #2c1810;
+}
+
+/* 윷 던지기 애니메이션 */
+.yut-stick.throwing {
+    animation: yutThrow 0.8s ease-in-out;
+}
+
+@keyframes yutThrow {
+    0% { transform: rotate(0deg) scale(1); }
+    25% { transform: rotate(90deg) scale(1.1); }
+    50% { transform: rotate(180deg) scale(0.9); }
+    75% { transform: rotate(270deg) scale(1.1); }
+    100% { transform: rotate(360deg) scale(1); }
+}
+
+.yut-explanation {
+    font-size: 1.1em;
+    color: #fff;
+    margin-top: 15px;
+    font-weight: bold;
+    min-height: 25px;
+}
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+    .game-container {
+        padding: 10px;
+    }
+    
+    h1 {
+        font-size: 2em;
+    }
+    
+    .game-info {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    
+    .board {
+        gap: 5px;
+        padding: 15px;
+    }
+    
+    .position {
+        font-size: 0.7em;
+        min-height: 50px;
+    }
+    
+    .players-area {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .piece {
+        width: 35px;
+        height: 35px;
+        font-size: 1.3em;
+    }
+    
+    .throw-btn, .skip-btn {
+        padding: 12px 25px;
+        font-size: 1em;
+        margin: 5px;
+    }
+    
+    /* 모바일 모달 스타일 */
+    .modal-content {
+        width: 95%;
+        margin: 5% auto;
+        max-height: 85vh;
+    }
+    
+    .modal-header {
+        padding: 15px;
+    }
+    
+    .modal-header h2 {
+        font-size: 1.5em;
+    }
+    
+    .modal-body {
+        padding: 20px;
+    }
+    
+    .modal-body h3 {
+        font-size: 1.3em;
+    }
+    
+    .rules-section {
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+    
+    .rules-section h4 {
+        font-size: 1.1em;
+    }
+    
+    .game-tips {
+        padding: 15px;
+    }
+    
+    .modal-footer {
+        padding: 15px 20px;
+    }
+    
+    .start-btn, .rules-btn {
+        padding: 12px 20px;
+        font-size: 1em;
+        margin: 5px;
+        display: block;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    /* 모바일 윷 시각화 스타일 */
+    .yut-display {
+        padding: 15px;
+        margin: 15px 0;
+    }
+    
+    .yut-display h3 {
+        font-size: 1.1em;
+        margin-bottom: 10px;
+    }
+    
+    .yut-sticks {
+        gap: 10px;
+        margin: 15px 0;
+    }
+    
+    .yut-stick {
+        width: 50px;
+        height: 12px;
+    }
+    
+    .yut-explanation {
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.8em;
+    }
+    
+    .board {
+        gap: 3px;
+        padding: 10px;
+    }
+    
+    .position {
+        font-size: 0.6em;
+        min-height: 40px;
+    }
+    
+    .piece {
+        width: 30px;
+        height: 30px;
+        font-size: 1.1em;
+    }
+}
