@@ -1,1 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>지옥의 윷놀이</title>
+    <link rel="stylesheet" href="hell_yut_style.css">
+</head>
+
+<body>
+    <!-- 게임 설명 모달 -->
+    <div id="gameModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🔥지옥의 윷놀이🔥</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <h3>게임 설명</h3>
+                <div class="rules-section">
+                    <h4>🎯 기본 규칙</h4>
+                    <ul>
+                        <li><strong>목표:</strong> 4개의 말을 모두 골인시키면 승리!</li>
+                        <li><strong>윷 결과:</strong> 도(1칸), 개(2칸), 걸(3칸), 윷(4칸), 모(5칸)</li>
+                        <li><strong>특별 규칙:</strong> 윷이나 모가 나오면 한 번 더 던질 수 있어요</li>
+                        <li><strong>말 잡기:</strong> 상대방 말과 같은 칸에 오면 상대방 말을 잡고 한 번 더!</li>
+                    </ul>
+                </div>
+
+                <div class="rules-section hell-rules">
+                    <h4>🔥 지옥의 특별 규칙</h4>
+                    <ul>
+                        <li><strong>지옥 구간:</strong> 5번, 10번, 15번 칸은 지옥 구간입니다</li>
+                        <li><strong>지옥 함정:</strong> 지옥 구간에 들어가면 "모"가 나올 때까지 탈출할 수 없음</li>
+                        <li><strong>탈출 조건:</strong> 지옥에 갇힌 말이 있으면 반드시 "모"를 던져야 해요</li>
+                        <li><strong>지옥 표시:</strong> 지옥에 갇힌 말은 특별한 효과로 표시됩니다</li>
+                    </ul>
+                </div>
+
+                <div class="rules-section">
+                    <h4>🎮 게임 모드</h4>
+                    <ul>
+                        <li><strong>1인 플레이:</strong> AI와 대결하세요!</li>
+                        <li><strong>2인 플레이:</strong> 친구랑 함께 플레이하세요!</li>
+                    </ul>
+                </div>
+
+                <div class="rules-section">
+                    <h4>🎮 조작 방법</h4>
+                    <ul>
+                        <li><strong>PC:</strong> 마우스로 클릭</li>
+                        <li><strong>모바일:</strong> 터치로 조작</li>
+                        <li><strong>윷 던지기:</strong> "윷 던지기" 버튼 클릭</li>
+                        <li><strong>말 선택:</strong> 하이라이트된 말을 클릭하여 이동</li>
+                    </ul>
+                </div>
+
+                <div class="game-tips">
+                    <h4>💡 게임 팁</h4>
+                    <p>지옥 구간을 피하면서 전략적으로 말을 움직이세요!<br>
+                        상대방을 지옥에 빠뜨리고 자신은 안전하게 골인하는 것이 승리의 열쇠입니다!</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="game-mode-selection">
+                    <h4>🎮 게임 모드 선택</h4>
+                    <div class="mode-buttons">
+                        <button id="singlePlayerMode" class="mode-btn">🤖 AI와 대결</button>
+                        <button id="twoPlayerMode" class="mode-btn">👥 2인 플레이</button>
+                    </div>
+                </div>
+                <button id="showRulesBtn" class="rules-btn">게임 중 규칙 보기</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="game-container">
+        <h1>🔥지옥의 윷놀이🔥</h1>
+
+        <div class="game-info">
+            <div class="current-player">
+                현재 플레이어: <span id="currentPlayer">플레이어 1</span>
+            </div>
+            <div class="yut-result">
+                윷 결과: <span id="yutResult">-</span>
+            </div>
+        </div>
+
+        <div class="yut-display">
+            <h3>🎲 던진 윷</h3>
+            <div class="yut-sticks" id="yutSticks">
+                <div class="yut-stick" data-stick="0"></div>
+                <div class="yut-stick" data-stick="1"></div>
+                <div class="yut-stick" data-stick="2"></div>
+                <div class="yut-stick" data-stick="3"></div>
+            </div>
+            <div class="yut-explanation" id="yutExplanation">윷을 던져보세요!</div>
+        </div>
+
+        <div class="game-board">
+            <div class="board-container">
+                <!-- 윷놀이 판 -->
+                <div class="board">
+                    <!-- 바깥쪽 경로 -->
+                    <div class="position outer" data-pos="0">시작</div>
+                    <div class="position outer" data-pos="1">도</div>
+                    <div class="position outer" data-pos="2">개</div>
+                    <div class="position outer" data-pos="3">걸</div>
+                    <div class="position outer" data-pos="4">윷</div>
+                    <div class="position outer hell-zone" data-pos="5">🔥지옥🔥</div>
+                    <div class="position outer" data-pos="6">모</div>
+                    <div class="position outer" data-pos="7">도</div>
+                    <div class="position outer" data-pos="8">개</div>
+                    <div class="position outer" data-pos="9">걸</div>
+                    <div class="position outer hell-zone" data-pos="10">🔥지옥🔥</div>
+                    <div class="position outer" data-pos="11">윷</div>
+                    <div class="position outer" data-pos="12">모</div>
+                    <div class="position outer" data-pos="13">도</div>
+                    <div class="position outer" data-pos="14">개</div>
+                    <div class="position outer hell-zone" data-pos="15">🔥지옥🔥</div>
+                    <div class="position outer" data-pos="16">걸</div>
+                    <div class="position outer" data-pos="17">윷</div>
+                    <div class="position outer" data-pos="18">모</div>
+                    <div class="position outer" data-pos="19">도</div>
+                    <div class="position outer goal" data-pos="20">골인!</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="players-area">
+            <div class="player-section">
+                <h3 id="player1Name">당신 (🔴)</h3>
+                <div class="pieces" id="player1Pieces">
+                    <div class="piece player1" data-piece="0">🔴</div>
+                    <div class="piece player1" data-piece="1">🔴</div>
+                    <div class="piece player1" data-piece="2">🔴</div>
+                    <div class="piece player1" data-piece="3">🔴</div>
+                </div>
+            </div>
+
+            <div class="player-section">
+                <h3 id="player2Name">AI (🔵)</h3>
+                <div class="pieces" id="player2Pieces">
+                    <div class="piece player2" data-piece="0">🔵</div>
+                    <div class="piece player2" data-piece="1">🔵</div>
+                    <div class="piece player2" data-piece="2">🔵</div>
+                    <div class="piece player2" data-piece="3">🔵</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button id="throwYut" class="throw-btn">윷 던지기!</button>
+            <button id="skipTurn" class="skip-btn" style="display: none;">턴 넘기기</button>
+        </div>
+
+        <div class="hell-info">
+            <h3>🔥 지옥의 규칙 🔥</h3>
+            <ul>
+                <li>지옥 구간(5, 10, 15번)에 들어가면 "모"가 나올 때까지 못 나옴!</li>
+                <li>지옥에서는 "모"만 탈출 가능!</li>
+                <li>다른 말이 같은 자리에 오면 잡아먹힘!</li>
+                <li>모든 말을 골인시키면 승리!</li>
+            </ul>
+        </div>
+
+        <div class="message-area">
+            <div id="gameMessage">게임을 시작하세요!</div>
+        </div>
+    </div>
+
+    <script src="hell_yut_script.js"></script>
+</body>
+
+</html>
